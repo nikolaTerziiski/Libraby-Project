@@ -1,7 +1,10 @@
 #include <iostream>
 #include "User.h"
 
-User::User() {}
+User::User() {
+	this->name = "";
+	this->password = "";
+}
 
 User::User(String name, String password)
 {

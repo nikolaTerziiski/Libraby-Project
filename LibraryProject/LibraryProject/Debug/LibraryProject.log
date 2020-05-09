@@ -1,20 +1,20 @@
 ﻿  Session.cpp
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\Vector.h(61,2): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\Vector.h(54): message : while compiling class template member function 'Vector<User> &Vector<User>::operator =(const Vector<User> &)'
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\TextData.h(26): message : see reference to function template instantiation 'Vector<User> &Vector<User>::operator =(const Vector<User> &)' being compiled
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\Session.h(11): message : see reference to class template instantiation 'Vector<User>' being compiled
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\Vector.h(36,2): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\Vector.h(34): message : while compiling class template member function 'void Vector<User>::push_back(const T &)'
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(116,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(126,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(61,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(54): message : while compiling class template member function 'Vector<User> &Vector<User>::operator =(const Vector<User> &)'
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\TextData.h(27): message : see reference to function template instantiation 'Vector<User> &Vector<User>::operator =(const Vector<User> &)' being compiled
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.h(10): message : see reference to class template instantiation 'Vector<User>' being compiled
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(36,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(34): message : while compiling class template member function 'void Vector<User>::push_back(const T &)'
           with
           [
               T=User
           ]
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\TextData.h(21): message : see reference to function template instantiation 'void Vector<User>::push_back(const T &)' being compiled
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\TextData.h(22): message : see reference to function template instantiation 'void Vector<User>::push_back(const T &)' being compiled
           with
           [
               T=User
           ]
-  main.cpp
-  Generating Code...
-C:\Users\Legion\Desktop\Libraby-project\LibraryProject\LibraryProject\TextData.h(15): warning C4172: returning address of local variable or temporary: result
-  LibraryProject.vcxproj -> C:\Users\Legion\Desktop\Libraby-project\LibraryProject\Debug\LibraryProject.exe
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\TextData.h(16): warning C4172: returning address of local variable or temporary: result
+  LibraryProject.vcxproj -> C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\Debug\LibraryProject.exe

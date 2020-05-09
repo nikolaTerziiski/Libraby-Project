@@ -7,5 +7,7 @@ class Validator {
 public:
 	Validator();
 
-	bool DoesUserExists(String& name, String& password, Vector<User>& allPeople);
+	bool DoesUserExists(String& name, Vector<User>& allPeople);
+
+	bool DoesMovieExists(String& name);
 };

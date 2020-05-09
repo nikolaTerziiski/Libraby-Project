@@ -77,7 +77,7 @@ char String::operator[](int index)
 	return this->data[index];
 }
 
-bool String::operator==(String & other)
+bool String::operator==(String& other)
 {
 	//strcmp връща -1,0 , 1. Ако са равни съответно ще върне 0
 	return strcmp(data, other.data) == 0;

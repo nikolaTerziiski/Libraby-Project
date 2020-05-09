@@ -2,7 +2,7 @@
 
 Validator::Validator(){}
 
-bool Validator::DoesUserExists(String& name, String& password, Vector<User>& allUsers)
+bool Validator::DoesUserExists(String& name, Vector<User>& allUsers)
 {
 	for (int i = 0; i < allUsers.length(); i++)
 	{
