@@ -2,7 +2,7 @@
 #include <iostream>
 #include "String.h"
 #include "StringWS.h"
-
+#include "DateTime.h"
 class Book {
 public:
 
@@ -14,7 +14,7 @@ public:
 	StringWS title;
 	String genre;
 	StringWS description;
-	String year;
+	DateTime year;
 	StringWS keyWords;
 	float rating;
 	

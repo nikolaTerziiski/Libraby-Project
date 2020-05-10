@@ -106,7 +106,46 @@ namespace data {
 		{
 			std::cout << counter << ". " <<books[i].title << ", " << books[i].author << ", " << books[i].genre << ", personal number: " << books[i].id << std::endl;
 			counter++;
-			return;
 		}
+	}
+	bool isLeap(int year)
+	{
+		return (((year % 4 == 0) &&
+			(year % 100 != 0)) ||
+			(year % 400 == 0));
+	}
+	DateTime inputYear(DateTime& date) {
+		int day, month, year;
+		std::cout << '\n';
+		std::cout << "-- Enter day: ";
+		std::cin >> day;
+		std::cout << "-- Enter month: ";
+		std::cin >> month;
+		std::cout << "-- Enter year: ";
+		std::cin >> year;
+
+		bool isValidDate = false;
+		while (!isValidDate)
+		{
+			if (month < 1 || month > 12 || day < 1 || day > 31 || (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) || (!isLeap(year) && day == 29 && month == 2))
+			{
+				std::cout << "Invalid date!";
+				std::cout << "-- Enter day: ";
+				std::cin >> day;
+				std::cout << "-- Enter month: ";
+				std::cin >> month;
+				std::cout << "-- Enter year: ";
+				std::cin >> year;
+			}
+			else
+			{
+				isValidDate = true;
+			}
+		}
+		date.day = day;
+		date.month = month;
+		date.year = year;
+
+		return date;
 	}
 }

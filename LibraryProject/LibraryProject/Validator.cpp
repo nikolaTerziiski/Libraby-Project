@@ -28,13 +28,12 @@ bool Validator::DoesUserExistsByName(String& name, Vector<User>& allUsers)
 
 bool Validator::DoesBookExist(StringWS& name, Vector<Book>& books)
 {
-	bool flag;
 	for (int i = 0; i < books.length(); i++)
 	{
 		if (books[i].title == name)
 		{
-			flag = true;
-			return;
+			return true;
+			
 		}
 	}
 	return false;

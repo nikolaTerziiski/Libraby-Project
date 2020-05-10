@@ -1,4 +1,43 @@
-﻿  StringWS.cpp
-C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\StringWS.cpp(155,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\StringWS.cpp(190,20): warning C4018: '<': signed/unsigned mismatch
+﻿  Session.cpp
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\TextData.h(105,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(109,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(119,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(243,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(280,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(290,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(300,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(326,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(337,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(360,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(363,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(373,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(376,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(386,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(389,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(399,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(402,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(416,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(419,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(429,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(432,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(442,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(445,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(455,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(458,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(61,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(54): message : while compiling class template member function 'Vector<Book> &Vector<Book>::operator =(const Vector<Book> &)'
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(334): message : see reference to function template instantiation 'Vector<Book> &Vector<Book>::operator =(const Vector<Book> &)' being compiled
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.h(12): message : see reference to class template instantiation 'Vector<Book>' being compiled
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(36,2): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Vector.h(34): message : while compiling class template member function 'void Vector<Book>::push_back(const T &)'
+          with
+          [
+              T=Book
+          ]
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\Session.cpp(230): message : see reference to function template instantiation 'void Vector<Book>::push_back(const T &)' being compiled
+          with
+          [
+              T=Book
+          ]
+C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\LibraryProject\TextData.h(16): warning C4172: returning address of local variable or temporary: result
   LibraryProject.vcxproj -> C:\Users\Legion\Desktop\GithubRepositories\Libraby-Project\LibraryProject\Debug\LibraryProject.exe

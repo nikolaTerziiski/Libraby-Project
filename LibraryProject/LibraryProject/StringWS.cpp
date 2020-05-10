@@ -97,6 +97,64 @@ bool StringWS::operator==(const char other)
 	return false;
 }
 
+bool StringWS::operator>(StringWS& other)
+{
+	if (this->length() > other.length())
+	{
+		return true;
+	}
+	else if (this->length() < other.length())
+	{
+		return false;
+	}
+	else
+	{
+		bool flag = false;
+		for (int i = 0; i < this->length(); i++)
+		{
+			if (this->data[i] > other.data[i])
+			{
+				flag = true;
+				return flag;
+			}
+			else if (this->data[i] < other.data[i])
+			{
+				return flag;
+			}
+		}
+		return false;
+	}
+}
+
+bool StringWS::operator<(StringWS& other)
+{
+	if (this->length() < other.length())
+	{
+		return true;
+	}
+	else if (this->length() > other.length())
+	{
+		return false;
+	}
+	else
+	{
+		bool flag = false;
+		for (int i = 0; i < this->length(); i++)
+		{
+			if (this->data[i] < other.data[i])
+			{
+				flag = true;
+				return flag;
+			}
+			else if (this->data[i] > other.data[i])
+			{
+				return flag;
+			}
+		}
+		return false;
+	}
+}
+
 bool StringWS::Contains(StringWS& input)
 {
 	

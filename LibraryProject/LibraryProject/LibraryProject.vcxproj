@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
+    <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="String.cpp" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Book.h" />
+    <ClInclude Include="DateTime.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="StringWS.h" />

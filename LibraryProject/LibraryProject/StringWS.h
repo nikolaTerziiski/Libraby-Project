@@ -24,6 +24,9 @@ public:
 	bool operator== (StringWS& other);
 	bool operator== (const char* other);
 	bool operator== (const char other);
+	bool operator> (StringWS& other);
+	bool operator< (StringWS& other);
+
 
 	bool Contains(StringWS& input);
 	bool CheckIfInt(StringWS& input);

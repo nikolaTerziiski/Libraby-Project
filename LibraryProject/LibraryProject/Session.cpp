@@ -143,7 +143,7 @@ void Session::BookSplit()
 	{
 		StringWS author, title, description, keyWords;
 		//Ako iskame nqkolko genre moje i StringWS, no go napravih samo s 1
-		String date, genre;
+		String genre;
 		float rating = 0.0;
 
 		Book bookToAdd;
@@ -171,6 +171,8 @@ void Session::BookSplit()
 		//TO DO
 
 		bookToAdd.title = title;
+
+		//Adding genre
 		std::cout << "Enter genre: ";
 		std::cin >> genre;
 		while (genre == "")
@@ -180,6 +182,8 @@ void Session::BookSplit()
 			std::cin >> genre;
 		}
 		bookToAdd.genre = genre;
+
+		//Adding description
 		std::cout << "Enter some description for the movie: ";
 		std::cin >> description;
 		while (description == "" || description.length() > 300)
@@ -190,14 +194,12 @@ void Session::BookSplit()
 		}
 		bookToAdd.description = description;
 		std::cout << "Enter when the movie came out (in format DD/MM/YYYY): ";
-		std::cin >> date;
-		while (date == "")
-		{
-			std::cout << "You must input date!" << std::endl;
-			std::cout << "Enter when the movie came out (in format DD/MM/YYYY): ";
-			std::cin >> date;
-		}
-		bookToAdd.year = date;
+		
+		//Adding date
+		DateTime date;
+		bookToAdd.year = data::inputYear(date);
+		std::cin.ignore();
+		//Adding some key words
 		std::cout << "Write some key words for the movie(Example: great actors, nice animations): ";
 		std::cin >> keyWords;
 		while (keyWords == "")
@@ -207,6 +209,8 @@ void Session::BookSplit()
 			std::cin >> keyWords;
 		}
 		bookToAdd.keyWords = keyWords;
+
+		//Adding rating
 		std::cout << "Give some rating for the movie in range [1.0 - 10.0]: ";
 		std::cin >> rating;
 		while (rating < 1.0 || rating > 10.0)
@@ -228,8 +232,7 @@ void Session::BookSplit()
 
 		std::cout << "Book: " << bookToAdd.title << " succesfully added!" << std::endl;
 
-		//Poradi nqkakva prichina mi dava prazen red na sledvashtiq input v main-a i zatova pravq tuk edin String, koito poema tozi input i ne se zabelqzva
-		String spaceProblem; std::cin >> spaceProblem;
+		std::cin.ignore();
 		return;
 	}
 	else if (command == "info")
@@ -326,7 +329,7 @@ void Session::BookSplit()
 			{
 				continue;
 			}
-			result[i] = this->books[i];
+			result.push_back(this->books[i]);
 		}
 		this->books = result;
 		std::ofstream out;
@@ -337,10 +340,131 @@ void Session::BookSplit()
 				'\n' << books[i].keyWords << '\n' << books[i].rating << '\n';
 		}
 		out.close();
+		std::cout << "Successfully removed the book!";
 	}
 	else if (command == "sort")
 	{
-
+		String option, way;
+		std::cin >> option;
+		std::cin >> way;
+		if (!(option == "title" || option ==  "author" || option == "year" || option == "rating"))
+		{
+			std::cout << "Invalid way to sort! Try again" << std::endl;
+			return;
+		}
+		//asc
+		if (way == "")
+		{
+			if (option == "title")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].title > this->books[j + 1].title) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "author")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].author > this->books[j + 1].author) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "rating")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].rating > this->books[j + 1].rating) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "year")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].year > this->books[j + 1].year) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+		}
+		//desc
+		else
+		{
+			if (option == "title")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].title < this->books[j + 1].title) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "author")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].author < this->books[j + 1].author) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "rating")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].rating < this->books[j + 1].rating) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+			else if (option == "year")
+			{
+				for (int i = 0; i < this->books.length() - 1; i++)
+				{
+					// Last i elements are already in place  
+					for (int j = 0; j < this->books.length() - i - 1; j++)
+						if (this->books[j].year < this->books[j + 1].year) {
+							Book temp = this->books[j];
+							this->books[j] = this->books[j + 1];
+							this->books[j + 1] = temp;
+						}
+				}
+			}
+		}
+		data::PrintBooks(this->books);
 	}
 }
 
