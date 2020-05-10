@@ -4,8 +4,8 @@
 #include "TextData.h"
 
 
-Session::Session() {
-	this->allUsers = data::allUsersFromData(this->allUsers);
+Session::Session(String& path) {
+	this->allUsers = data::allUsersFromData(this->allUsers, path);
 	this->isUserLoggedIn = false;
 };
 
@@ -34,14 +34,14 @@ void Session::LogInUser()
 	if (this->validator.DoesUserExistsLogIn(name,password,this->allUsers))
 	{
 		this->user = User(name, password);
-		std::cout << "User {" << this->user.getName() << "} succesfully logged in!" << std::endl;
+		std::cout << "Welcome, " << this->user.getName() << '!' << std::endl;
 		this->isUserLoggedIn = true;
 		return;
 	}
 	std::cout << "Invalid username or password!" << std::endl;
 }
 
-void Session::AdminUsersControl()
+void Session::AdminUsersControl(String& path)
 {
 	String command;
 	std::cin >> command;
@@ -57,18 +57,18 @@ void Session::AdminUsersControl()
 	}
 	if (command == "add")
 	{
-		this->AdminAddUser();
+		this->AdminAddUser(path);
 	}
 	else if (command == "remove")
 	{
-		this->AdminRemoveUser();
+		this->AdminRemoveUser(path);
 	}
 	else
 	{
 		std::cout << "The action you are trying to make does't exists :)" << std::endl;
 	}
 }
-void Session::AdminAddUser()
+void Session::AdminAddUser(String& path)
 {
 	String username, password;
 	username = data::insertUsername(username);
@@ -77,14 +77,14 @@ void Session::AdminAddUser()
 	std::ofstream outfile;
 	this->allUsers.push_back(User(username, password));
 
-	outfile.open("newUsers.txt", std::ios_base::app); // append instead of overwrite
+	outfile.open(path.data, std::ios_base::app); // append instead of overwrite
 	outfile << username << " " << password << "\n";
 	outfile.close();
 
 	std::cout << username << " successfully registered." << std::endl;
 }
 
-void Session::AdminRemoveUser()
+void Session::AdminRemoveUser(String& path)
 {
 	String usernameToRemove;
 	Vector<User> result;
@@ -103,7 +103,7 @@ void Session::AdminRemoveUser()
 	}
 
 	std::ofstream out;
-	out.open("newUsers.txt", std::ios::out);
+	out.open(path.data, std::ios::out);
 
 	
 	for (int i = 0; i < this->allUsers.length(); i++)
@@ -340,20 +340,27 @@ void Session::BookSplit()
 				'\n' << books[i].keyWords << '\n' << books[i].rating << '\n';
 		}
 		out.close();
-		std::cout << "Successfully removed the book!";
+		std::cout << "Successfully removed the book!" << std::endl;
 	}
 	else if (command == "sort")
 	{
+		
 		String option, way;
 		std::cin >> option;
+		std::cout << "Type the way you want to sort the books - ascending or descending: ";
 		std::cin >> way;
+		if (this->books.length() == 0)
+		{
+			std::cout << "There are no books to sort" << std::endl;
+			return;
+		}
 		if (!(option == "title" || option ==  "author" || option == "year" || option == "rating"))
 		{
 			std::cout << "Invalid way to sort! Try again" << std::endl;
 			return;
 		}
 		//asc
-		if (way == "")
+		if (way == "ascending")
 		{
 			if (option == "title")
 			{
@@ -409,7 +416,7 @@ void Session::BookSplit()
 			}
 		}
 		//desc
-		else
+		else if(way == "descending")
 		{
 			if (option == "title")
 			{
@@ -464,7 +471,17 @@ void Session::BookSplit()
 				}
 			}
 		}
+		else
+		{
+			std::cout << "Invalid way of ordering. Please try again!" << std::endl;
+			return;
+		}
 		data::PrintBooks(this->books);
+	}
+	else
+	{
+		std::cout << "Invalid command for books!" << std::endl;
+		return;
 	}
 }
 

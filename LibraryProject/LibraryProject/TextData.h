@@ -5,11 +5,11 @@
 //#include "Vector.h"
 
 namespace data {
-	Vector<User>& allUsersFromData(Vector<User>& vector) {
+	Vector<User>& allUsersFromData(Vector<User>& vector, String& path) {
 		Vector<User> result;
 		std::ifstream in;
 		Vector<User> allUsers;
-		in.open("newUsers.txt", std::ios::in);
+		in.open(path.data, std::ios::in);
 		if (!in)
 		{
 			std::cout << "There are no users in the file" << std::endl;
@@ -76,6 +76,7 @@ namespace data {
 	}
 	void RestartProgramFiles(String& path)
 	{
+		
 		std::ofstream out;
 		out.open(path.data, std::ios::out | std::ios::trunc);
 		out << "admin" << " " << "i<3c++\n";

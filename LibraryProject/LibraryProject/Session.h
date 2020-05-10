@@ -6,7 +6,7 @@
 #include "Book.h"
 class Session {
 public :
-	Session();
+	Session(String& path);
 	User user;
 	Vector<User> allUsers;
 	Vector<Book> books;
@@ -17,11 +17,11 @@ public :
 
 	void LogInUser();
 	void LogoutUser();
-	void AdminUsersControl();
+	void AdminUsersControl(String& path);
 
 	void BookSplit();
 	void RestartProgramFiles(String& path);
 private:
-	void AdminAddUser();
-	void AdminRemoveUser();
+	void AdminAddUser(String& path);
+	void AdminRemoveUser(String& path);
 };
