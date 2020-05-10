@@ -1,23 +1,6 @@
 #include "Book.h"
 
-
-Book::Book()
-{
-	std::ifstream in;
-	in.open("id.txt", std::ios::in);
-
-	//Generating id
-	String temp;
-	in >> temp;
-	this->id = temp.MakeItInt();
-	in.close();
-
-	//Writing the id 
-	std::ofstream out;
-	out.open("id.txt", std::ios::out);
-	out << 1 + this->id << '\n';
-	out.close();
-}
+Book::Book(){}
 
 Book::Book(const Book& other)
 {
@@ -30,3 +13,26 @@ Book::Book(const Book& other)
 	this->title = other.title;
 	this->year = other.year;
 }
+
+void Book::PrintBook()
+{
+	std::cout << "Book author: " << this->author << std::endl;
+	std::cout << "Book title: " << this->title << std::endl;
+	std::cout << "Book description: " << this->description << std::endl;
+	std::cout << "Book genre: " << this->genre << std::endl;
+	std::cout << "Book key words: " << this->keyWords << std::endl;
+	std::cout << "Book rating: " << this->rating << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Book& book)
+{
+	os << "Book author: " << book.author << std::endl;
+	os << "Book title: " << book.title << std::endl;
+	os << "Book description: " << book.description << std::endl;
+	os << "Book genre: " << book.genre << std::endl;
+	os << "Book key words: " << book.keyWords << std::endl;
+	os << "Book rating: " << book.rating << std::endl;
+
+	return os;
+}
+

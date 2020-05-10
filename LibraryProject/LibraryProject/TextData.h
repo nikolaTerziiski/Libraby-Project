@@ -1,9 +1,9 @@
+//#include "User.h"
+#pragma once
 #include <fstream>
 #include <iostream>
-#include "Vector.h"
-#include "User.h"
+//#include "Vector.h"
 
-#pragma once
 namespace data {
 	Vector<User>& allUsersFromData(Vector<User>& vector) {
 		Vector<User> result;
@@ -27,6 +27,25 @@ namespace data {
 		vector = result;
 		return vector;
 	};
+
+	int generateBookId(int& id) {
+		std::ifstream in;
+		in.open("id.txt", std::ios::in);
+
+		//Generating id
+		String temp;
+		in >> temp;
+		id = temp.MakeItInt();
+		in.close();
+
+		//Writing the id 
+		std::ofstream out;
+		out.open("id.txt", std::ios::out);
+		out << 1 + id << '\n';
+		out.close();
+		return id;
+	};
+
 	String insertUsername(String& username) {
 		while (username.length() == 0)
 		{
@@ -54,5 +73,40 @@ namespace data {
 			}
 		}
 		return password;
+	}
+	void RestartProgramFiles(String& path)
+	{
+		std::ofstream out;
+		out.open(path.data, std::ios::out | std::ios::trunc);
+		out << "admin" << " " << "i<3c++\n";
+		out.close();
+
+		out.open("id.txt", std::ios::out);
+		out << 1 << '\n';
+		out.close();
+
+		out.open("books.txt", std::ios::out | std::ios::trunc);
+		out.close();
+	}
+	/*Book addBook() {
+
+	}*/
+	void PrintBooks(Vector<Book>& books) {
+		std::cout << "-----" << std::endl;
+		if (true)
+		{
+			if (books.length() == 0)
+			{
+				std::cout << "There are no books registered." << std::endl;
+				return;
+			}
+		}
+		int counter = 1;
+		for (int i = 0; i < books.length(); i++)
+		{
+			std::cout << counter << ". " <<books[i].title << ", " << books[i].author << ", " << books[i].genre << ", personal number: " << books[i].id << std::endl;
+			counter++;
+			return;
+		}
 	}
 }

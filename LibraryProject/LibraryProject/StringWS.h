@@ -25,6 +25,7 @@ public:
 	bool operator== (const char* other);
 	bool operator== (const char other);
 
+	bool Contains(StringWS& input);
 	bool CheckIfInt(StringWS& input);
 	int MakeItInt();
 	float MakeItDecimal();

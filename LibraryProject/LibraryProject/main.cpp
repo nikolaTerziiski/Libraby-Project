@@ -7,7 +7,8 @@
 
 int main() {
 	Session session;
-	session.RestartUsers();
+	String path = "newUsers.txt";
+	session.RestartProgramFiles(path);
 
 	std::cout << "If you want the program to end write : \"exit\"" << std::endl;
 	int actualIndex = 0;
@@ -16,7 +17,11 @@ int main() {
 	{
 		command = "";
 		std::cout << "Enter command: ";
-		std::cin >> command;/*
+		std::cin >> command;
+		if (command == "")
+		{
+			continue;
+		}/*
 		String command = takeArgument(actualIndex, )*/
 		if (command == "login")
 		{
@@ -28,7 +33,9 @@ int main() {
 		}
 		else if (command == "users")
 			session.AdminUsersControl();
-		else if (command == "books")
+		else if (command == "books") 
 			session.BookSplit();
+		
+
 	} while (!(command == "exit"));
 }

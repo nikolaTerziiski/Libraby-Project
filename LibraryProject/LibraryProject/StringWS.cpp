@@ -97,6 +97,16 @@ bool StringWS::operator==(const char other)
 	return false;
 }
 
+bool StringWS::Contains(StringWS& input)
+{
+	
+	if (!(strstr(this->data, input.data) == NULL))
+	{
+		return true;
+	}
+	return false;
+}
+
 bool StringWS::CheckIfInt(StringWS& input)
 {
 	for (int i = 0; i < input.length(); i++)

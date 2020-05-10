@@ -1,8 +1,8 @@
+#pragma once
 #include <iostream>
 #include "String.h"
 #include "StringWS.h"
 
-#pragma once
 class Book {
 public:
 
@@ -17,4 +17,9 @@ public:
 	String year;
 	StringWS keyWords;
 	float rating;
+	
+	void PrintBook();
+
+	friend std::ostream& operator<<(std::ostream&, const String&);
+private:
 };
