@@ -5,11 +5,11 @@
 //#include "Vector.h"
 
 namespace data {
-	Vector<User>& allUsersFromData(Vector<User>& vector, String& path) {
+	Vector<User>& allUsersFromData(Vector<User>& vector) {
 		Vector<User> result;
 		std::ifstream in;
 		Vector<User> allUsers;
-		in.open(path.data, std::ios::in);
+		in.open("users.txt", std::ios::in);
 		if (!in)
 		{
 			std::cout << "There are no users in the file" << std::endl;
@@ -27,7 +27,30 @@ namespace data {
 		vector = result;
 		return vector;
 	};
-
+	Vector<Book>& allBooksFromData(Vector<Book>& allBooksFromFile, String& path) {
+		std::ifstream in;
+		in.open(path.data, std::ios::in);
+		Vector<Book> result;
+		in.ignore();
+		while (!in.eof())
+		{
+			Book book;
+			in >> book.id;
+			in.ignore();
+			in >> book.title;
+			in >> book.author;
+			in >> book.description;
+			in >> book.genre;
+			in >> book.year.day; in >> book.year.month, in >> book.year.year;
+			in.ignore();
+			in >> book.keyWords;
+			in >> book.rating;
+			result.push_back(book);
+		}
+		in.close();
+		allBooksFromFile = result;
+		return allBooksFromFile;
+	};
 	int generateBookId(int& id) {
 		std::ifstream in;
 		in.open("id.txt", std::ios::in);
@@ -74,38 +97,20 @@ namespace data {
 		}
 		return password;
 	}
-	void RestartProgramFiles(String& path)
-	{
-		
-		std::ofstream out;
-		out.open(path.data, std::ios::out | std::ios::trunc);
-		out << "admin" << " " << "i<3c++\n";
-		out.close();
-
-		out.open("id.txt", std::ios::out);
-		out << 1 << '\n';
-		out.close();
-
-		out.open("books.txt", std::ios::out | std::ios::trunc);
-		out.close();
-	}
-	/*Book addBook() {
-
-	}*/
-	void PrintBooks(Vector<Book>& books) {
+	void PrintBooks(Vector<Book>& allBooksFromFile) {
 		std::cout << "-----" << std::endl;
 		if (true)
 		{
-			if (books.length() == 0)
+			if (allBooksFromFile.length() == 0)
 			{
 				std::cout << "There are no books registered." << std::endl;
 				return;
 			}
 		}
 		int counter = 1;
-		for (int i = 0; i < books.length(); i++)
+		for (int i = 0; i < allBooksFromFile.length(); i++)
 		{
-			std::cout << counter << ". " <<books[i].title << ", " << books[i].author << ", " << books[i].genre << ", personal number: " << books[i].id << std::endl;
+			std::cout << counter << ". " <<allBooksFromFile[i].title << ", " << allBooksFromFile[i].author << ", " << allBooksFromFile[i].genre << ", personal number: " << allBooksFromFile[i].id << std::endl;
 			counter++;
 		}
 	}

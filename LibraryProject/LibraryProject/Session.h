@@ -9,7 +9,8 @@ public :
 	Session(String& path);
 	User user;
 	Vector<User> allUsers;
-	Vector<Book> books;
+	Vector<Book> allBooksFromFile;
+	Vector<Book> booksWaitingToSave;
 
 	Validator validator;
 
@@ -21,6 +22,8 @@ public :
 
 	void BookSplit();
 	void RestartProgramFiles(String& path);
+
+	void SaveBooks(String& path);
 private:
 	void AdminAddUser(String& path);
 	void AdminRemoveUser(String& path);

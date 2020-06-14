@@ -26,11 +26,11 @@ bool Validator::DoesUserExistsByName(String& name, Vector<User>& allUsers)
 	return false;
 }
 
-bool Validator::DoesBookExist(StringWS& name, Vector<Book>& books)
+bool Validator::DoesBookExist(StringWS& name, Vector<Book>& allBooksFromFile)
 {
-	for (int i = 0; i < books.length(); i++)
+	for (int i = 0; i < allBooksFromFile.length(); i++)
 	{
-		if (books[i].title == name)
+		if (allBooksFromFile[i].title == name)
 		{
 			return true;
 			

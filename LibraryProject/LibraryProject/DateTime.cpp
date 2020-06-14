@@ -44,6 +44,6 @@ bool DateTime::operator<(const DateTime& other)
 
 std::ostream& operator<<(std::ostream& out, const DateTime& date)
 {
-	out << date.day << '/' << date.month << '/' << date.year << std::endl;
+	out << date.day << ' ' << date.month << ' ' << date.year;
 	return out;
 }

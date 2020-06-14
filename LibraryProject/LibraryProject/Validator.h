@@ -12,5 +12,5 @@ public:
 
 	bool DoesUserExistsByName(String& name, Vector<User>& allPeople);
 
-	bool DoesBookExist(StringWS& name, Vector<Book>& books);
+	bool DoesBookExist(StringWS& name, Vector<Book>& allBooksFromFile);
 };

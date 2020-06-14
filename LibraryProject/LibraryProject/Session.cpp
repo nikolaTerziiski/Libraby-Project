@@ -5,7 +5,8 @@
 
 
 Session::Session(String& path) {
-	this->allUsers = data::allUsersFromData(this->allUsers, path);
+	this->allUsers = data::allUsersFromData(this->allUsers);
+	this->allBooksFromFile = data::allBooksFromData(this->allBooksFromFile, path);
 	this->isUserLoggedIn = false;
 };
 
@@ -222,15 +223,8 @@ void Session::BookSplit()
 		}
 		bookToAdd.rating = rating;
 
-		std::ofstream out;
-		out.open("books.txt", std::ios::app);
-
-		out << bookToAdd.id << '\n' << bookToAdd.title << '\n' << bookToAdd.author << '\n' << bookToAdd.description << '\n' << bookToAdd.genre << '\n' << bookToAdd.year <<
-			'\n' << bookToAdd.keyWords << '\n' << bookToAdd.rating << '\n';
-		this->books.push_back(bookToAdd);
-		out.close();
-
-		std::cout << "Book: " << bookToAdd.title << " succesfully added!" << std::endl;
+		this->booksWaitingToSave.push_back(bookToAdd);
+		std::cout << "Book \"" << bookToAdd.title << "\" succesfully added to the waiting list. If you want to keep it, you have to save it" << std::endl;
 
 		std::cin.ignore();
 		return;
@@ -240,36 +234,36 @@ void Session::BookSplit()
 		int id;
 		std::cin >> id;
 		Book bookToFind;
-		for (int i = 0; i < this->books.length(); i++)
+		for (int i = 0; i < this->allBooksFromFile.length(); i++)
 		{
-			if (this->books[i].id == id)
+			if (this->allBooksFromFile[i].id == id)
 			{
-				bookToFind = this->books[i];
+				bookToFind = this->allBooksFromFile[i];
 			}
 		}
-		bookToFind.PrintBook();
-		String spaceProblem; std::cin >> spaceProblem;
+		bookToFind.PrintBookInformation();
+		std::cin.ignore();
 		return;
 	}
 	else if (command == "find")
 	{
 		String criteria;
 		std::cin >> criteria;
+		StringWS toSearch;
+		std::cin >> toSearch;
 
 		if (!(criteria == "author" || criteria == "title" || criteria == "tag"))
 		{
 			std::cout << "Invalid criteria, please try again." << std::endl;
 			return;
 		}
-		if (this->books.length() == 0)
+		if (this->allBooksFromFile.length() == 0)
 		{
 			std::cout << "There are no books to search for." << std::endl;
 			return;	
 		}
 
 		Vector<Book> booksToPrint;
-		StringWS toSearch;
-		std::cin >> toSearch;
 		if (toSearch == "")
 		{
 			std::cout << "You havent entered any information ot search for. Try again." << std::endl;
@@ -277,31 +271,31 @@ void Session::BookSplit()
 		}
 		if (criteria == "author")
 		{
-			for (int i = 0; i < this->books.length(); i++)
+			for (int i = 0; i < this->allBooksFromFile.length(); i++)
 			{
-				if (this->books[i].author == toSearch)
+				if (this->allBooksFromFile[i].author == toSearch)
 				{
-					booksToPrint.push_back(this->books[i]);
+					booksToPrint.push_back(this->allBooksFromFile[i]);
 				}
 			}
 		}
 		else if (criteria == "title")
 		{
-			for (int i = 0; i < this->books.length(); i++)
+			for (int i = 0; i < this->allBooksFromFile.length(); i++)
 			{
-				if (this->books[i].title == toSearch)
+				if (this->allBooksFromFile[i].title == toSearch)
 				{
-					booksToPrint.push_back(this->books[i]);
+					booksToPrint.push_back(this->allBooksFromFile[i]);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < this->books.length(); i++)
+			for (int i = 0; i < this->allBooksFromFile.length(); i++)
 			{
-				if (this->books[i].keyWords.Contains(toSearch))
+				if (this->allBooksFromFile[i].keyWords.Contains(toSearch))
 				{
-					booksToPrint.push_back(this->books[i]);
+					booksToPrint.push_back(this->allBooksFromFile[i]);
 				}
 			}
 		}
@@ -311,33 +305,33 @@ void Session::BookSplit()
 	}
 	else if (command == "all")
 	{
-		data::PrintBooks(this->books);
+		data::PrintBooks(this->allBooksFromFile);
 	}
 	else if(command == "remove")
 	{
 		StringWS titleToRemove;
 		std::cin >> titleToRemove;
-		if (!this->validator.DoesBookExist(titleToRemove, this->books))
+		if (!this->validator.DoesBookExist(titleToRemove, this->allBooksFromFile))
 		{
 			std::cout << "There is no book with this title" << std::endl;
 			return;
 		}
 		Vector<Book> result;
-		for (int i = 0; i < this->books.length(); i++)
+		for (int i = 0; i < this->allBooksFromFile.length(); i++)
 		{
-			if (this->books[i].title == titleToRemove)
+			if (this->allBooksFromFile[i].title == titleToRemove)
 			{
 				continue;
 			}
-			result.push_back(this->books[i]);
+			result.push_back(this->allBooksFromFile[i]);
 		}
-		this->books = result;
+		this->allBooksFromFile = result;
 		std::ofstream out;
 		out.open("books.txt", std::ios::out | std::ios::trunc);
-		for (int i = 0; i < this->books.length(); i++)
+		for (int i = 0; i < this->allBooksFromFile.length(); i++)
 		{
-			out << books[i].id << '\n' << books[i].title << '\n' << books[i].author << '\n' << books[i].description << '\n' << books[i].genre << '\n' << books[i].year <<
-				'\n' << books[i].keyWords << '\n' << books[i].rating << '\n';
+			out << allBooksFromFile[i].id << '\n' << allBooksFromFile[i].title << '\n' << allBooksFromFile[i].author << '\n' << allBooksFromFile[i].description << '\n' << allBooksFromFile[i].genre << '\n' << allBooksFromFile[i].year <<
+				'\n' << allBooksFromFile[i].keyWords << '\n' << allBooksFromFile[i].rating << '\n';
 		}
 		out.close();
 		std::cout << "Successfully removed the book!" << std::endl;
@@ -349,7 +343,7 @@ void Session::BookSplit()
 		std::cin >> option;
 		std::cout << "Type the way you want to sort the books - ascending or descending: ";
 		std::cin >> way;
-		if (this->books.length() == 0)
+		if (this->allBooksFromFile.length() == 0)
 		{
 			std::cout << "There are no books to sort" << std::endl;
 			return;
@@ -364,53 +358,53 @@ void Session::BookSplit()
 		{
 			if (option == "title")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].title > this->books[j + 1].title) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].title > this->allBooksFromFile[j + 1].title) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "author")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].author > this->books[j + 1].author) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].author > this->allBooksFromFile[j + 1].author) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "rating")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].rating > this->books[j + 1].rating) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].rating > this->allBooksFromFile[j + 1].rating) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "year")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].year > this->books[j + 1].year) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].year > this->allBooksFromFile[j + 1].year) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
@@ -420,53 +414,53 @@ void Session::BookSplit()
 		{
 			if (option == "title")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].title < this->books[j + 1].title) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].title < this->allBooksFromFile[j + 1].title) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "author")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].author < this->books[j + 1].author) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].author < this->allBooksFromFile[j + 1].author) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "rating")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].rating < this->books[j + 1].rating) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].rating < this->allBooksFromFile[j + 1].rating) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
 			else if (option == "year")
 			{
-				for (int i = 0; i < this->books.length() - 1; i++)
+				for (int i = 0; i < this->allBooksFromFile.length() - 1; i++)
 				{
 					// Last i elements are already in place  
-					for (int j = 0; j < this->books.length() - i - 1; j++)
-						if (this->books[j].year < this->books[j + 1].year) {
-							Book temp = this->books[j];
-							this->books[j] = this->books[j + 1];
-							this->books[j + 1] = temp;
+					for (int j = 0; j < this->allBooksFromFile.length() - i - 1; j++)
+						if (this->allBooksFromFile[j].year < this->allBooksFromFile[j + 1].year) {
+							Book temp = this->allBooksFromFile[j];
+							this->allBooksFromFile[j] = this->allBooksFromFile[j + 1];
+							this->allBooksFromFile[j + 1] = temp;
 						}
 				}
 			}
@@ -476,7 +470,7 @@ void Session::BookSplit()
 			std::cout << "Invalid way of ordering. Please try again!" << std::endl;
 			return;
 		}
-		data::PrintBooks(this->books);
+		data::PrintBooks(this->allBooksFromFile);
 	}
 	else
 	{
@@ -485,7 +479,36 @@ void Session::BookSplit()
 	}
 }
 
-void Session::RestartProgramFiles(String& path)
+void Session::SaveBooks(String &path)
 {
-	data::RestartProgramFiles(path);
+	if (this->booksWaitingToSave.length() == 0)
+	{
+		std::cout << "There are no books to be saved" << std::endl;
+		return;
+	}
+
+	std::ofstream out;
+	out.open(path.data, std::ios::out | std::ios::trunc);
+	if (!out.is_open())
+	{
+		std::cout << "Invalid path to save. Please enter correct path" << std::endl;
+		return;
+	}
+	out << '\n';
+	for (int i = 0; i < this->booksWaitingToSave.length(); i++)
+	{
+		this->allBooksFromFile.push_back(this->booksWaitingToSave[i]);
+		if (this->booksWaitingToSave.length() - 1 == i)
+		{
+			out << booksWaitingToSave[i].id << '\n' << booksWaitingToSave[i].title << '\n' << booksWaitingToSave[i].author << '\n' << booksWaitingToSave[i].description << '\n' << booksWaitingToSave[i].genre << '\n' << booksWaitingToSave[i].year <<
+				'\n' << booksWaitingToSave[i].keyWords << '\n' << booksWaitingToSave[i].rating;
+
+		}
+		else
+		{
+			out << booksWaitingToSave[i].id << '\n' << booksWaitingToSave[i].title << '\n' << booksWaitingToSave[i].author << '\n' << booksWaitingToSave[i].description << '\n' << booksWaitingToSave[i].genre << '\n' << booksWaitingToSave[i].year <<
+				'\n' << booksWaitingToSave[i].keyWords << '\n' << booksWaitingToSave[i].rating << '\n';
+		}
+	}
+	std::cout << "Unsaved books successfully saved" << std::endl;
 }

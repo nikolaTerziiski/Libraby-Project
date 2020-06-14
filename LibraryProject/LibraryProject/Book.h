@@ -18,8 +18,6 @@ public:
 	StringWS keyWords;
 	float rating;
 	
-	void PrintBook();
-
-	friend std::ostream& operator<<(std::ostream&, const String&);
+	void PrintBookInformation();
 private:
 };

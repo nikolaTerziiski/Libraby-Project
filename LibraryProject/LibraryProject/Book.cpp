@@ -14,25 +14,15 @@ Book::Book(const Book& other)
 	this->year = other.year;
 }
 
-void Book::PrintBook()
+void Book::PrintBookInformation()
 {
+	std::cout << "----------------------------" << std::endl;
 	std::cout << "Book author: " << this->author << std::endl;
 	std::cout << "Book title: " << this->title << std::endl;
 	std::cout << "Book description: " << this->description << std::endl;
 	std::cout << "Book genre: " << this->genre << std::endl;
+	std::cout << "Date published: " << this->year.day << "/" << this->year.month << "/" << this->year.year << std::endl;
 	std::cout << "Book key words: " << this->keyWords << std::endl;
 	std::cout << "Book rating: " << this->rating << std::endl;
+	std::cout << "----------------------------" << std::endl;
 }
-
-std::ostream& operator<<(std::ostream& os, const Book& book)
-{
-	os << "Book author: " << book.author << std::endl;
-	os << "Book title: " << book.title << std::endl;
-	os << "Book description: " << book.description << std::endl;
-	os << "Book genre: " << book.genre << std::endl;
-	os << "Book key words: " << book.keyWords << std::endl;
-	os << "Book rating: " << book.rating << std::endl;
-
-	return os;
-}
-
