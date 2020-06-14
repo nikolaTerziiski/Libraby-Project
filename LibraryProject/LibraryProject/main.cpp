@@ -54,6 +54,7 @@ int Engine(String& path) {
 			String newPath;
 			std::cin >> newPath;
 			session.SaveBooks(newPath);
+			std::cout << "Succesfully saved at: " << newPath << std::endl;
 		}
 		else if (command == "close")
 			continue;
