@@ -8,6 +8,7 @@ Session::Session(String& path) {
 	this->allUsers = data::allUsersFromData(this->allUsers);
 	this->allBooksFromFile = data::allBooksFromData(this->allBooksFromFile, path);
 	this->isUserLoggedIn = false;
+	this->filePath = path;
 };
 
 void Session::LogoutUser()
@@ -58,18 +59,18 @@ void Session::AdminUsersControl(String& path)
 	}
 	if (command == "add")
 	{
-		this->AdminAddUser(path);
+		this->AdminAddUser();
 	}
 	else if (command == "remove")
 	{
-		this->AdminRemoveUser(path);
+		this->AdminRemoveUser();
 	}
 	else
 	{
 		std::cout << "The action you are trying to make does't exists :)" << std::endl;
 	}
 }
-void Session::AdminAddUser(String& path)
+void Session::AdminAddUser()
 {
 	String username, password;
 	username = data::insertUsername(username);
@@ -78,14 +79,14 @@ void Session::AdminAddUser(String& path)
 	std::ofstream outfile;
 	this->allUsers.push_back(User(username, password));
 
-	outfile.open(path.data, std::ios_base::app); // append instead of overwrite
+	outfile.open("users.txt", std::ios_base::app); // append instead of overwrite
 	outfile << username << " " << password << "\n";
 	outfile.close();
 
 	std::cout << username << " successfully registered." << std::endl;
 }
 
-void Session::AdminRemoveUser(String& path)
+void Session::AdminRemoveUser()
 {
 	String usernameToRemove;
 	Vector<User> result;
@@ -104,7 +105,7 @@ void Session::AdminRemoveUser(String& path)
 	}
 
 	std::ofstream out;
-	out.open(path.data, std::ios::out);
+	out.open("users.txt", std::ios::out);
 
 	
 	for (int i = 0; i < this->allUsers.length(); i++)
@@ -114,7 +115,6 @@ void Session::AdminRemoveUser(String& path)
 			result.push_back(this->allUsers[i]);
 		}
 	}
-	
 	this->allUsers = result;
 
 	for (int i = 0; i < this->allUsers.length(); i++)
@@ -241,6 +241,12 @@ void Session::BookSplit()
 				bookToFind = this->allBooksFromFile[i];
 			}
 		}
+		if (bookToFind.id == 0)
+		{
+			std::cout << "The book with this Id does not exist" << std::endl;
+			std::cin.ignore();
+			return;
+		}
 		bookToFind.PrintBookInformation();
 		std::cin.ignore();
 		return;
@@ -326,15 +332,7 @@ void Session::BookSplit()
 			result.push_back(this->allBooksFromFile[i]);
 		}
 		this->allBooksFromFile = result;
-		std::ofstream out;
-		out.open("books.txt", std::ios::out | std::ios::trunc);
-		for (int i = 0; i < this->allBooksFromFile.length(); i++)
-		{
-			out << allBooksFromFile[i].id << '\n' << allBooksFromFile[i].title << '\n' << allBooksFromFile[i].author << '\n' << allBooksFromFile[i].description << '\n' << allBooksFromFile[i].genre << '\n' << allBooksFromFile[i].year <<
-				'\n' << allBooksFromFile[i].keyWords << '\n' << allBooksFromFile[i].rating << '\n';
-		}
-		out.close();
-		std::cout << "Successfully removed the book!" << std::endl;
+		std::cout << "Successfully removed the book! If you want to delete it from file save the file." << std::endl;
 	}
 	else if (command == "sort")
 	{
@@ -481,34 +479,40 @@ void Session::BookSplit()
 
 void Session::SaveBooks(String &path)
 {
-	if (this->booksWaitingToSave.length() == 0)
-	{
-		std::cout << "There are no books to be saved" << std::endl;
-		return;
-	}
-
 	std::ofstream out;
-	out.open(path.data, std::ios::out | std::ios::trunc);
+	out.open(path.data, std::ios::in | std::ios::trunc);
 	if (!out.is_open())
 	{
 		std::cout << "Invalid path to save. Please enter correct path" << std::endl;
 		return;
 	}
-	out << '\n';
 	for (int i = 0; i < this->booksWaitingToSave.length(); i++)
 	{
 		this->allBooksFromFile.push_back(this->booksWaitingToSave[i]);
-		if (this->booksWaitingToSave.length() - 1 == i)
-		{
-			out << booksWaitingToSave[i].id << '\n' << booksWaitingToSave[i].title << '\n' << booksWaitingToSave[i].author << '\n' << booksWaitingToSave[i].description << '\n' << booksWaitingToSave[i].genre << '\n' << booksWaitingToSave[i].year <<
-				'\n' << booksWaitingToSave[i].keyWords << '\n' << booksWaitingToSave[i].rating;
+	}
+	this->booksWaitingToSave = Vector<Book>();
+	if (this->allBooksFromFile.length() == 0)
+	{
+		out.close();
 
-		}
-		else
+	}
+	else {
+		out << '\n';
+		for (int i = 0; i < this->allBooksFromFile.length(); i++)
 		{
-			out << booksWaitingToSave[i].id << '\n' << booksWaitingToSave[i].title << '\n' << booksWaitingToSave[i].author << '\n' << booksWaitingToSave[i].description << '\n' << booksWaitingToSave[i].genre << '\n' << booksWaitingToSave[i].year <<
-				'\n' << booksWaitingToSave[i].keyWords << '\n' << booksWaitingToSave[i].rating << '\n';
+			if (this->allBooksFromFile.length() - 1 == i)
+			{
+				out << this->allBooksFromFile[i].id << '\n' << this->allBooksFromFile[i].title << '\n' << this->allBooksFromFile[i].author << '\n' << this->allBooksFromFile[i].description << '\n' << this->allBooksFromFile[i].genre << '\n' << this->allBooksFromFile[i].year <<
+					'\n' << this->allBooksFromFile[i].keyWords << '\n' << this->allBooksFromFile[i].rating;
+
+			}
+			else
+			{
+				out << this->allBooksFromFile[i].id << '\n' << this->allBooksFromFile[i].title << '\n' << this->allBooksFromFile[i].author << '\n' << this->allBooksFromFile[i].description << '\n' << this->allBooksFromFile[i].genre << '\n' << this->allBooksFromFile[i].year <<
+					'\n' << this->allBooksFromFile[i].keyWords << '\n' << this->allBooksFromFile[i].rating << '\n';
+			}
 		}
+		out.close();
 	}
 	std::cout << "Unsaved books successfully saved" << std::endl;
 }

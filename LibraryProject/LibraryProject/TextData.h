@@ -2,6 +2,7 @@
 #pragma once
 #include <fstream>
 #include <iostream>
+#include <conio.h>
 //#include "Vector.h"
 
 namespace data {
@@ -31,8 +32,9 @@ namespace data {
 		std::ifstream in;
 		in.open(path.data, std::ios::in);
 		Vector<Book> result;
+		
 		in.ignore();
-		while (!in.eof())
+		while (!in.eof() || in.get() != -1)
 		{
 			Book book;
 			in >> book.id;
@@ -88,6 +90,16 @@ namespace data {
 		{
 			password = "";
 			std::cout << "Enter password: ";
+			/*char s = 'a';
+			while (true)
+			{
+				s = _getch(); _putch('*');
+				if (s == 13)
+				{
+					break;
+				}
+				password = password + s;
+			}*/
 			std::cin >> password;
 			if (password.length() == 0)
 			{

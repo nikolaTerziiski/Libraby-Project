@@ -6,6 +6,7 @@
 #include "Book.h"
 class Session {
 public :
+	String filePath;
 	Session(String& path);
 	User user;
 	Vector<User> allUsers;
@@ -21,10 +22,9 @@ public :
 	void AdminUsersControl(String& path);
 
 	void BookSplit();
-	void RestartProgramFiles(String& path);
 
 	void SaveBooks(String& path);
 private:
-	void AdminAddUser(String& path);
-	void AdminRemoveUser(String& path);
+	void AdminAddUser();
+	void AdminRemoveUser();
 };

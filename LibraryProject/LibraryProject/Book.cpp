@@ -1,6 +1,8 @@
 #include "Book.h"
 
-Book::Book(){}
+Book::Book(){
+	this->id = 0;
+}
 
 Book::Book(const Book& other)
 {

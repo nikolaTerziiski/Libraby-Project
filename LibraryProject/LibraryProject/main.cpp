@@ -16,17 +16,19 @@ void PrintCommandsForLibrary() {
 
 }
 int Engine(String& path) {
-	Session session(path);
-
-	//At the very beginning i check if the file exists. If it doesnt i made the function to return a int. So i return 1 if it doesnt exists
 	std::ifstream in;
 	in.open(path.data, std::ios::in);
-	if (in.fail())
+	if (!in.is_open())
 	{
 		return 1;
 	}
+	Session session(path);
+
+	//At the very beginning i check if the file exists. If it doesnt i made the function to return a int. So i return 1 if it doesnt exists
 	std::cout << "If you want the program to end write : \"close\"" << std::endl;
 	PrintCommandsForLibrary();
+
+
 	String command;
 	do
 	{
@@ -58,6 +60,8 @@ int Engine(String& path) {
 		else
 			std::cout << "Invalid command! \n";
 	} while (!(command == "close"));
+
+	std::cout << "Succesfully closed the file" << std::endl;
 }
 int main() {
 	String command;
@@ -75,7 +79,7 @@ int main() {
 			if (result == 1)
 			{
 				std::cout << "The file with name " << path << " doesn't exist" << std::endl;
-				return 0;
+				continue;
 			}
 		}
 		else if (command == "help")
