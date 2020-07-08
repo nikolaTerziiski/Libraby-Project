@@ -6,10 +6,9 @@
 //#include "Vector.h"
 
 namespace data {
-	Vector<User>& allUsersFromData(Vector<User>& vector) {
+	Vector<User>& allUsersFromData(Vector<User>& allUsers) {
 		Vector<User> result;
 		std::ifstream in;
-		Vector<User> allUsers;
 		in.open("users.txt", std::ios::in);
 		if (!in)
 		{
@@ -25,8 +24,8 @@ namespace data {
 			in >> temp;
 		}
 		in.close();
-		vector = result;
-		return vector;
+		allUsers = result;
+		return allUsers;
 	};
 	Vector<Book>& allBooksFromData(Vector<Book>& allBooksFromFile, String& path) {
 		std::ifstream in;
@@ -125,6 +124,36 @@ namespace data {
 			std::cout << counter << ". " <<allBooksFromFile[i].title << ", " << allBooksFromFile[i].author << ", " << allBooksFromFile[i].genre << ", personal number: " << allBooksFromFile[i].id << std::endl;
 			counter++;
 		}
+	}
+	void AddUserToFile(String& username, String& password) {
+		std::ofstream outfile;
+
+		outfile.open("users.txt", std::ios_base::app); // append instead of overwrite
+		outfile << username << " " << password << "\n";
+		outfile.close();
+		std::cout << username << " successfully registered." << std::endl;
+	}
+	void RemoveUserFromFile(String& usernameToRemove, Vector<User>& allUsers) {
+
+		std::ofstream out;
+		out.open("users.txt", std::ios::out);
+		Vector<User> result;
+
+		for (int i = 0; i < allUsers.length(); i++)
+		{
+			if (!(allUsers[i].getName() == usernameToRemove))
+			{
+				result.push_back(allUsers[i]);
+			}
+		}
+		allUsers = result;
+
+		for (int i = 0; i < allUsers.length(); i++)
+		{
+			out << allUsers[i].getName() << " " << allUsers[i].getPassword() << '\n';
+		}
+		out.close();
+		std::cout << usernameToRemove << " succesfully removed." << std::endl;
 	}
 	bool isLeap(int year)
 	{

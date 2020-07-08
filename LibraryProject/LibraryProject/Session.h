@@ -11,7 +11,6 @@ public :
 	User user;
 	Vector<User> allUsers;
 	Vector<Book> allBooksFromFile;
-	Vector<Book> booksWaitingToSave;
 
 	Validator validator;
 

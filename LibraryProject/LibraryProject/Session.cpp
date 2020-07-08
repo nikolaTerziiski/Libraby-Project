@@ -76,20 +76,14 @@ void Session::AdminAddUser()
 	username = data::insertUsername(username);
 	password = data::insertPassword(password);
 
-	std::ofstream outfile;
+	User newUser = User(username, password);
 	this->allUsers.push_back(User(username, password));
-
-	outfile.open("users.txt", std::ios_base::app); // append instead of overwrite
-	outfile << username << " " << password << "\n";
-	outfile.close();
-
-	std::cout << username << " successfully registered." << std::endl;
+	data::AddUserToFile(username, password);
 }
 
 void Session::AdminRemoveUser()
 {
 	String usernameToRemove;
-	Vector<User> result;
 
 	std::cout << "Enter username to remove: ";
 	std::cin >> usernameToRemove;
@@ -104,25 +98,7 @@ void Session::AdminRemoveUser()
 		return;
 	}
 
-	std::ofstream out;
-	out.open("users.txt", std::ios::out);
-
-	
-	for (int i = 0; i < this->allUsers.length(); i++)
-	{
-		if (!(this->allUsers[i].getName() == usernameToRemove))
-		{
-			result.push_back(this->allUsers[i]);
-		}
-	}
-	this->allUsers = result;
-
-	for (int i = 0; i < this->allUsers.length(); i++)
-	{
-		out << this->allUsers[i].getName() << " " << this->allUsers[i].getPassword() << '\n';
-	}
-	out.close();
-	std::cout << usernameToRemove << " succesfully removed." << std::endl;
+	data::RemoveUserFromFile(usernameToRemove, this->allUsers);
 }
 
 void Session::BookSplit()
@@ -223,8 +199,8 @@ void Session::BookSplit()
 		}
 		bookToAdd.rating = rating;
 
-		this->booksWaitingToSave.push_back(bookToAdd);
-		std::cout << "Book \"" << bookToAdd.title << "\" succesfully added to the waiting list. If you want to keep it, you have to save it" << std::endl;
+		this->allBooksFromFile.push_back(bookToAdd);
+		std::cout << "Book \"" << bookToAdd.title << "\" succesfully added to the waiting list. If you want to keep it, you have to save it in the file." << std::endl;
 
 		std::cin.ignore();
 		return;
@@ -479,24 +455,18 @@ void Session::BookSplit()
 
 void Session::SaveBooks(String &path)
 {
-	std::ofstream out;
-	out.open(path.data, std::ios::in | std::ios::trunc);
-	if (!out.is_open())
-	{
-		std::cout << "Invalid path to save. Please enter correct path" << std::endl;
-		return;
-	}
-	for (int i = 0; i < this->booksWaitingToSave.length(); i++)
-	{
-		this->allBooksFromFile.push_back(this->booksWaitingToSave[i]);
-	}
-	this->booksWaitingToSave = Vector<Book>();
 	if (this->allBooksFromFile.length() == 0)
 	{
-		out.close();
-
+		return;
 	}
 	else {
+		std::ofstream out;
+		out.open(path.data, std::ios::in | std::ios::trunc);
+		if (!out.is_open())
+		{
+			std::cout << "Invalid path to save. Please enter correct path" << std::endl;
+			return;
+		}
 		out << '\n';
 		for (int i = 0; i < this->allBooksFromFile.length(); i++)
 		{
